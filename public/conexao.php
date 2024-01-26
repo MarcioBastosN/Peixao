@@ -1,21 +1,23 @@
 <?php
 
-class conexao {
-    
-    private $host = "localhost";
-    private $user = "root";
-    private $password = "";
-    private $database = "mydb";
-    private $port = "3306";
+class conexao
+{
+
+    private $host = "db";
+    private $user = "postgres";
+    private $password = "postgres";
+    private $database = "peixao";
+    private $port = "5432";
     private $conexao;
 
-    function getConexao() {
+    function getConexao()
+    {
         $this->conexao = mysqli_connect($this->host, $this->user, $this->password, $this->database, $this->port) or die("Erro de Conexao ao Banco de Dados");
         return $this->conexao;
     }
-    
-    function fecharConexao(){
+
+    function fecharConexao()
+    {
         return mysqli_close($this->conexao) or die("Erro ao Fechar a conexao");
     }
-    
 }

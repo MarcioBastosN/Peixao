@@ -1,0 +1,59 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: mb
+        uid: 1000
+      context: ./
+      dockerfile: docker-compose/app/Dockerfile
+    image: peixao
+    container_name: peixao-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/php/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      - TZ=America/Santarem
+    networks:
+      peixao:
+        ipv4_address: 172.16.2.4
+
+  db:
+    image: postgres:12.6-alpine
+    container_name: peixao-db
+    restart: unless-stopped
+    ports:
+        - "5027:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - /home/dbdata/peixao:/var/lib/postgresql/data
+    networks:
+      peixao:
+        ipv4_address: 172.16.2.5
+
+  nginx:
+    image: nginx:alpine
+    container_name: peixao-nginx
+    restart: unless-stopped
+    ports:
+      - "8021:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    environment:
+      - TZ=America/Santarem
+    networks:
+      peixao:
+        ipv4_address: 172.16.2.6
+
+networks:
+  peixao:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.2.0/28

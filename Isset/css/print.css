@@ -1,0 +1,13 @@
+#top-link, footer, form, header, .btn-imprime, .btn-imprime2 {	}
+.nImprime{ display:none; }
+section .nImprime{ display:none; }
+#btn-imprime, #btn-imprime2 #tab2, #go, #troca{ display: none; }
+ul .dropdown-menu{ display: none; }
+#nImprime{ display: none; }
+#datas{ font-size: 18px; text-align: center; }
+#datas a { display: none; }
+#tabela thead input{ display:none; }
+table thead th input{ display:none; }
+#Cliente td{ font-size: 18px; }
+#Cliente td button{ display: none; }
+#ApenasImpressao{ display: block; position: relative; bottom: 0px; }
